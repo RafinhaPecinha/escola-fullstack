@@ -14,7 +14,8 @@ export default function Header() {
       <div className="header-top-bar">
         <div className="top-bar-container">
           <div className="top-info">
-            <span className="badge-sesi">SESI SENAI</span>
+            <span className="badge-sesi">SESI</span>
+            <span className="badge-senai">SENAI</span>
             <span className="school-unit">Centro Educacional Mirandópolis</span>
           </div>
           <div className="top-meta">
@@ -27,11 +28,11 @@ export default function Header() {
       <div className="header-nav-container">
         <Link href="/" className="logo-brand">
           <div className="logo-icon-wrapper">
-            <IconGraduation className="logo-icon" width={28} height={28} />
+            <IconGraduation className="logo-icon" width={26} height={26} />
           </div>
           <div className="logo-text-group">
-            <span className="brand-name">Sistema Escolar</span>
-            <span className="brand-location">SESI Mirandópolis</span>
+            <span className="brand-name">SESI <span className="text-red">MIRANDÓPOLIS</span></span>
+            <span className="brand-location">Sistema Escolar Integrado</span>
           </div>
         </Link>
 
@@ -73,7 +74,7 @@ export default function Header() {
         <div className="header-actions">
           <div className="search-pill">
             <IconSearch width={16} height={16} />
-            <input type="text" placeholder="Buscar aluno, turma..." />
+            <input type="text" placeholder="Buscar no portal..." />
           </div>
           <Link href="/cadaluno" className="cta-btn">
             <IconUserPlus width={16} height={16} />

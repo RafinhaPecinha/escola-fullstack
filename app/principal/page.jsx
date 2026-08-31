@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import {
@@ -32,28 +31,28 @@ export default function Principal() {
       src: "/images/hero-banner.jpg",
       title: "Hub de Inovação & Robótica SESI SENAI",
       category: "Tecnologia",
-      desc: "Alunos trabalhando em projetos de automação e robótica de alta performance."
+      desc: "Alunos trabalhando em projetos de automação, tecnologia e robótica de alta performance."
     },
     {
       id: 2,
       src: "/images/classroom.jpg",
       title: "Salas de Aula Digitais e Interativas",
       category: "Ensino",
-      desc: "Ambientes modernos com telas interativas e metodologias ativas de aprendizado."
+      desc: "Ambientes modernos com lousas digitais e metodologias ativas de aprendizado."
     },
     {
       id: 3,
       src: "/images/robotics.jpg",
       title: "Laboratório STEM & Eletrônica",
       category: "Laboratório",
-      desc: "Projetos práticos com Arduino, microcontroladores e programação avançada."
+      desc: "Projetos práticos com microcontroladores, programação e kits de eletrônica."
     },
     {
       id: 4,
       src: "/images/library.jpg",
       title: "Biblioteca e Centro de Pesquisa",
       category: "Infraestrutura",
-      desc: "Espaço amplo com acervo físico e digital completo para estudos individuais e em grupo."
+      desc: "Espaço amplo com acervo físico e digital completo para estudos e trabalhos escolares."
     }
   ];
 
@@ -63,25 +62,25 @@ export default function Principal() {
       id: 1,
       date: "31 AGO",
       type: "Importante",
-      badgeClass: "badge-danger",
-      title: "Abertura do Período de Lançamento de Notas do 3º Bimestre",
-      text: "Os professores já podem realizar o lançamento das notas e frequências no sistema."
+      badgeClass: "badge-sesi-red",
+      title: "Abertura do Período de Lançamento de Notas - 3º Bimestre",
+      text: "Os professores já podem realizar o lançamento das notas e frequências no sistema escolar SESI."
     },
     {
       id: 2,
       date: "05 SET",
-      type: "Evento",
-      badgeClass: "badge-primary",
+      type: "Evento SESI",
+      badgeClass: "badge-sesi-blue",
       title: "Feira de Tecnologia & Robótica SESI Mirandópolis",
-      text: "Apresentação dos projetos desenvolvidos pelos estudantes no laboratório STEM."
+      text: "Apresentação dos projetos de automação desenvolvidos pelos estudantes no laboratório STEM."
     },
     {
       id: 3,
       date: "12 SET",
       type: "Acadêmico",
-      badgeClass: "badge-success",
+      badgeClass: "badge-sesi-dark",
       title: "Reunião de Pais e Mestres - Ensino Fundamental e Médio",
-      text: "Entrega de boletins informativos e atendimento individualizado dos docentes."
+      text: "Entrega de boletins informativos e atendimento individualizado com os docentes."
     }
   ];
 
@@ -90,34 +89,33 @@ export default function Principal() {
       <Header />
 
       <main className="main-content">
-        {/* HERO SECTION */}
-        <section className="hero-section">
-          <div className="hero-bg-overlay"></div>
+        {/* HERO SECTION - ESTILO BRANCO SESI */}
+        <section className="hero-section hero-sesi-white">
           <div className="hero-container">
             <div className="hero-badge">
               <IconSparkles width={16} height={16} />
-              <span>Portal Acadêmico 2026</span>
+              <span>Portal Acadêmico SESI SP</span>
             </div>
 
             <h1 className="hero-title">
               Sistema Escolar Integrado <br />
-              <span className="text-gradient">SESI Mirandópolis</span>
+              <span className="text-sesi-red">SESI Mirandópolis</span>
             </h1>
 
             <p className="hero-subtitle">
-              Gestão educacional de alta performance: acompanhamento de cadastros, controle de notas, emissão de boletins e visualização de indicadores acadêmicos em uma só plataforma.
+              Plataforma de gestão educacional e acompanhamento pedagógico. Gerencie matrículas de alunos, lançamentos de notas, boletins e indicadores acadêmicos em um ambiente simples e moderno.
             </p>
 
             <div className="hero-actions">
-              <Link href="/cadaluno" className="btn-primary">
+              <Link href="/cadaluno" className="btn-sesi-red">
                 <IconUserPlus width={20} height={20} />
                 <span>Cadastrar Novo Aluno</span>
               </Link>
-              <Link href="/listaluno" className="btn-secondary">
+              <Link href="/listaluno" className="btn-sesi-navy">
                 <IconList width={20} height={20} />
-                <span>Ver Lista de Alunos</span>
+                <span>Lista de Alunos</span>
               </Link>
-              <Link href="/notaluno" className="btn-outline">
+              <Link href="/notaluno" className="btn-sesi-outline">
                 <IconFileEdit width={20} height={20} />
                 <span>Lançar Notas</span>
               </Link>
@@ -126,7 +124,7 @@ export default function Principal() {
             {/* Quick Stats Grid */}
             <div className="stats-grid">
               <div className="stat-card">
-                <div className="stat-icon icon-blue">
+                <div className="stat-icon icon-red">
                   <IconUsers width={24} height={24} />
                 </div>
                 <div className="stat-info">
@@ -136,7 +134,7 @@ export default function Principal() {
               </div>
 
               <div className="stat-card">
-                <div className="stat-icon icon-purple">
+                <div className="stat-icon icon-navy">
                   <IconBookOpen width={24} height={24} />
                 </div>
                 <div className="stat-info">
@@ -172,16 +170,16 @@ export default function Principal() {
         <section className="section-container" id="modulos">
           <div className="section-header">
             <div>
-              <span className="section-tag">Navegação Direta</span>
-              <h2 className="section-title">Módulos de Gestão do Sistema</h2>
+              <span className="section-tag">Acesso Rápido</span>
+              <h2 className="section-title">Módulos de Gestão Escolar</h2>
             </div>
             <p className="section-subtitle">
-              Acesse rapidamente as principais funcionalidades de gerenciamento do portal.
+              Selecione uma das opções para gerenciar as rotas do sistema.
             </p>
           </div>
 
           <div className="modules-grid">
-            <Link href="/cadaluno" className="module-card card-blue">
+            <Link href="/cadaluno" className="module-card card-sesi-red">
               <div className="card-top">
                 <div className="card-icon">
                   <IconUserPlus width={28} height={28} />
@@ -189,14 +187,14 @@ export default function Principal() {
                 <span className="card-badge">Cadastro</span>
               </div>
               <h3>Cadastrar Aluno</h3>
-              <p>Registre novos alunos com matrícula, dados pessoais, turma e responsável.</p>
+              <p>Registre novos alunos com dados pessoais, matrícula, turma e contato do responsável.</p>
               <div className="card-arrow">
-                <span>Acessar formulário</span>
+                <span>Abrir cadastro</span>
                 <IconChevronRight width={18} height={18} />
               </div>
             </Link>
 
-            <Link href="/listaluno" className="module-card card-cyan">
+            <Link href="/listaluno" className="module-card card-sesi-navy">
               <div className="card-top">
                 <div className="card-icon">
                   <IconList width={28} height={28} />
@@ -204,14 +202,14 @@ export default function Principal() {
                 <span className="card-badge">Consulta</span>
               </div>
               <h3>Lista de Alunos</h3>
-              <p>Visualize, busque e filtre a lista completa de estudantes cadastrados no sistema.</p>
+              <p>Consulte e busque a listagem completa dos alunos matriculados na unidade SESI.</p>
               <div className="card-arrow">
-                <span>Ver listagem</span>
+                <span>Ver alunos</span>
                 <IconChevronRight width={18} height={18} />
               </div>
             </Link>
 
-            <Link href="/notaluno" className="module-card card-purple">
+            <Link href="/notaluno" className="module-card card-sesi-purple">
               <div className="card-top">
                 <div className="card-icon">
                   <IconFileEdit width={28} height={28} />
@@ -219,39 +217,39 @@ export default function Principal() {
                 <span className="card-badge">Avaliações</span>
               </div>
               <h3>Lançar Notas</h3>
-              <p>Insira notas de provas, trabalhos e médias bimestrais por disciplina.</p>
+              <p>Insira avaliações bimestrais, trabalhos acadêmicos e mídias por disciplina.</p>
               <div className="card-arrow">
                 <span>Lançar notas</span>
                 <IconChevronRight width={18} height={18} />
               </div>
             </Link>
 
-            <Link href="/listanota" className="module-card card-emerald">
+            <Link href="/listanota" className="module-card card-sesi-emerald">
               <div className="card-top">
                 <div className="card-icon">
                   <IconAward width={28} height={28} />
                 </div>
-                <span className="card-badge">Relatórios</span>
+                <span className="card-badge">Boletim</span>
               </div>
-              <h3>Lista de Notas & Boletins</h3>
-              <p>Consulte histórico de notas, verifique aprovados/reprovados e médias por matéria.</p>
+              <h3>Lista de Notas</h3>
+              <p>Consulte o histórico de rendimento, notas dos alunos e relatórios de desempenho.</p>
               <div className="card-arrow">
-                <span>Ver boletins</span>
+                <span>Ver notas</span>
                 <IconChevronRight width={18} height={18} />
               </div>
             </Link>
           </div>
         </section>
 
-        {/* GALERIA E FOTOS DE DESTAQUE */}
-        <section className="section-container section-gallery" id="galeria">
+        {/* GALERIA DE FOTOS SESI */}
+        <section className="section-container section-gallery-white" id="galeria">
           <div className="section-header">
             <div>
-              <span className="section-tag">Infraestrutura & Destaques</span>
-              <h2 className="section-title">Galeria de Fotos da Escola</h2>
+              <span className="section-tag">Instalações SESI</span>
+              <h2 className="section-title">Galeria da Escola</h2>
             </div>
             <p className="section-subtitle">
-              Conheça nossas instalações tecnológicas, laboratórios e ambientes de aprendizado no SESI Mirandópolis.
+              Conheça os espaços de aprendizado, laboratórios e biblioteca da nossa unidade.
             </p>
           </div>
 
@@ -259,16 +257,16 @@ export default function Principal() {
             {galleryImages.map((img) => (
               <div
                 key={img.id}
-                className="gallery-item"
+                className="gallery-item-white"
                 onClick={() => setSelectedImage(img)}
               >
                 <div className="gallery-img-wrapper">
                   <img src={img.src} alt={img.title} className="gallery-img" />
-                  <div className="gallery-overlay">
-                    <span className="gallery-category">{img.category}</span>
+                  <div className="gallery-overlay-white">
+                    <span className="gallery-category-red">{img.category}</span>
                     <h4 className="gallery-item-title">{img.title}</h4>
                     <p className="gallery-item-desc">{img.desc}</p>
-                    <button className="gallery-zoom-btn">
+                    <button className="gallery-zoom-btn-red">
                       <IconZoomIn width={18} height={18} />
                       <span>Ampliar Imagem</span>
                     </button>
@@ -278,37 +276,36 @@ export default function Principal() {
             ))}
           </div>
 
-          {/* Dica para o usuário sobre adição de imagens */}
-          <div className="image-tip-box">
-            <div className="tip-icon">
+          <div className="image-tip-box-white">
+            <div className="tip-icon-red">
               <IconImageIcon width={24} height={24} />
             </div>
             <div className="tip-content">
-              <h4>Como personalizar ou adicionar mais imagens no portal?</h4>
+              <h4>Dica: Como atualizar ou colocar mais imagens no site?</h4>
               <p>
-                Você pode substituir ou adicionar novas fotos colando arquivos de imagem na pasta <code>public/images/</code> do projeto e referenciando seus caminhos no componente.
+                As fotos ficam salvas na pasta <code>public/images/</code>. Para adicionar mais fotos, basta colocar seus arquivos lá e incluir o caminho no componente!
               </p>
             </div>
           </div>
         </section>
 
-        {/* SEÇÃO DE AVISOS E MURAL ACADÊMICO */}
+        {/* SEÇÃO DE AVISOS */}
         <section className="section-container" id="avisos">
           <div className="section-header">
             <div>
-              <span className="section-tag">Mural de Notícias</span>
-              <h2 className="section-title">Comunicados & Calendário Escolar</h2>
+              <span className="section-tag">Comunicação Escola</span>
+              <h2 className="section-title">Mural de Avisos & Comunicados</h2>
             </div>
-            <div className="live-notice-pill">
+            <div className="live-notice-pill-red">
               <IconBell width={16} height={16} />
-              <span>Atualizado hoje</span>
+              <span>Informativos Recentes</span>
             </div>
           </div>
 
           <div className="announcements-list">
             {announcements.map((item) => (
-              <div key={item.id} className="announcement-card">
-                <div className="announcement-date">
+              <div key={item.id} className="announcement-card-white">
+                <div className="announcement-date-red">
                   <IconCalendar width={18} height={18} />
                   <span>{item.date}</span>
                 </div>
@@ -325,18 +322,18 @@ export default function Principal() {
         </section>
       </main>
 
-      {/* MODAL DE AMPLIAÇÃO DA FOTO DA GALERIA */}
+      {/* MODAL DE AMPLIAÇÃO */}
       {selectedImage && (
         <div className="modal-backdrop" onClick={() => setSelectedImage(null)}>
-          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelectedImage(null)}>
+          <div className="modal-container-white" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close-red" onClick={() => setSelectedImage(null)}>
               <IconX width={24} height={24} />
             </button>
             <div className="modal-img-holder">
               <img src={selectedImage.src} alt={selectedImage.title} className="modal-img" />
             </div>
-            <div className="modal-caption">
-              <span className="gallery-category">{selectedImage.category}</span>
+            <div className="modal-caption-white">
+              <span className="gallery-category-red">{selectedImage.category}</span>
               <h3>{selectedImage.title}</h3>
               <p>{selectedImage.desc}</p>
             </div>

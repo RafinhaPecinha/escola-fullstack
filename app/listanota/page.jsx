@@ -12,11 +12,6 @@ export default function ListaNota() {
 
   const [notaEditando, setNotaEditando] = useState(null);
 
-  const calcularMedia = (item) => {
-    const soma = Number(item.t1) + Number(item.t2) + Number(item.n1) + Number(item.n2) + Number(item.n3);
-    return (soma / 5).toFixed(1);
-  };
-
   const excluirNota = (id) => {
     if (confirm("Tem certeza que deseja excluir esta nota?")) {
       setNotas(notas.filter(n => n.id !== id));
@@ -58,7 +53,6 @@ export default function ListaNota() {
                     <th style={{ width: "70px" }}>N1</th>
                     <th style={{ width: "70px" }}>N2</th>
                     <th style={{ width: "70px" }}>N3</th>
-                    <th style={{ width: "90px" }}>MÉDIA</th>
                     <th style={{ width: "150px" }}>AÇÕES</th>
                   </tr>
                 </thead>
@@ -74,11 +68,6 @@ export default function ListaNota() {
                         <td>{n.n2}</td>
                         <td>{n.n3}</td>
                         <td>
-                          <strong style={{ color: Number(calcularMedia(n)) >= 7 ? "#166534" : "#991b1b" }}>
-                            {calcularMedia(n)}
-                          </strong>
-                        </td>
-                        <td>
                           <div className="action-buttons">
                             <button onClick={() => setNotaEditando({ ...n })} className="btn-action-edit">
                               ✏️ Editar
@@ -92,7 +81,7 @@ export default function ListaNota() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="9" style={{ textAlign: "center", padding: "40px", color: "#64748b" }}>
+                      <td colSpan="8" style={{ textAlign: "center", padding: "40px", color: "#64748b" }}>
                         Nenhuma nota cadastrada.
                       </td>
                     </tr>

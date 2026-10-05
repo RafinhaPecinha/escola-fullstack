@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Header from "../components/header";
 import Footer from "../components/footer";
@@ -13,12 +13,9 @@ import {
 } from "../components/icons";
 
 export default function ListAluno() {
-    // Lista inicial de alunos cadastrados
-    const [alunos, setAlunos] = useState([
-        { id: 1, nome: "Rafael Lima", idade: 17, serie: "3º Ano Ensino Médio", ra: "676767" },
-        { id: 2, nome: "Kelvin Destaque", idade: 18, serie: "3º Ano Ensino Médio", ra: "123123123" },
-
-    ]);
+    // Lista de alunos da base de dados
+    const [alunos, setAlunos] = useState([]);
+    const [carregando, setCarregando] = useState(true);
 
     // Estado para busca/filtro
     const [busca, setBusca] = useState("");
@@ -26,32 +23,106 @@ export default function ListAluno() {
     // Estado para modal de edição
     const [alunoEditando, setAlunoEditando] = useState(null);
 
+    // Função para carregar alunos da API
+    const carregarAlunos = async () => {
+        try {
+            setCarregando(true);
+            const res = await fetch("/api/alunos");
+            if (res.ok) {
+                const dados = await res.json();
+                setAlunos(dados);
+            } else {
+                console.error("Erro ao buscar alunos");
+            }
+        } catch (error) {
+            console.error("Erro ao conectar com servidor:", error);
+        } finally {
+            setCarregando(false);
+        }
+    };
+
+    useEffect(() => {
+        carregarAlunos();
+    }, []);
+
     // Função para abrir o modal de edição
     const editarAluno = (aluno) => {
         setAlunoEditando({ ...aluno });
     };
 
-    // Salvar alterações da edição
-    const salvarEdicao = (e) => {
+    // Salvar alterações da edição na API
+    const salvarEdicao = async (e) => {
         e.preventDefault();
-        setAlunos(alunos.map(a => a.id === alunoEditando.id ? alunoEditando : a));
-        setAlunoEditando(null);
-    };
+        try {
+            const id = alunoEditando.id_aluno || alunoEditando.id;
+            const res = await fetch("/api/alunos", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id_aluno: id,
+                    nome: alunoEditando.nome,
+                    idade: Number(alunoEditando.idade),
+                    serie: alunoEditando.serie,
+                    ra: alunoEditando.ra
+                })
+            });
 
-    // Função para excluir aluno
-    const excluirAluno = (id) => {
-        const aluno = alunos.find(a => a.id === id);
-        if (confirm(`Tem certeza que deseja excluir o(a) aluno(a) ${aluno?.nome}?`)) {
-            setAlunos(alunos.filter(a => a.id !== id));
+            if (res.ok) {
+                setAlunoEditando(null);
+                carregarAlunos();
+            } else {
+                const err = await res.json();
+                alert(err.message || "Erro ao editar aluno.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao conectar com o servidor.");
         }
     };
 
-    // Alunos filtrados pela busca
-    const alunosFiltrados = alunos.filter(a =>
-        a.nome.toLowerCase().includes(busca.toLowerCase()) ||
-        a.ra.includes(busca) ||
-        a.serie.toLowerCase().includes(busca.toLowerCase())
-    );
+    // Função para excluir aluno na API
+    const excluirAluno = async (id, nome) => {
+        if (confirm(`Tem certeza que deseja excluir o(a) aluno(a) ${nome || ""}?`)) {
+            try {
+                const res = await fetch("/api/alunos", {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id_aluno: id })
+                });
+
+                if (res.ok) {
+                    carregarAlunos();
+                } else {
+                    const err = await res.json();
+                    alert(err.message || "Erro ao excluir aluno.");
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Erro ao conectar com o servidor.");
+            }
+        }
+    };
+
+    // Alunos filtrados pela busca (somente a partir do 3º caractere)
+    const termoBusca = busca.trim().toLowerCase();
+    const buscaAtiva = termoBusca.length >= 3;
+
+    const alunosFiltrados = alunos.filter(a => {
+        if (!buscaAtiva) return true;
+
+        const termoSemHash = termoBusca.replace(/^#/, "");
+        const alunoId = String(a.id_aluno ?? a.id ?? "");
+        const nome = (a.nome || "").toLowerCase();
+        const ra = String(a.ra || "");
+        const serie = (a.serie || "").toLowerCase();
+
+        return (
+            (termoSemHash !== "" && alunoId.includes(termoSemHash)) ||
+            nome.includes(termoBusca) ||
+            ra.includes(termoBusca) ||
+            serie.includes(termoBusca)
+        );
+    });
 
     return (
         <div className="page-wrapper">
@@ -86,7 +157,7 @@ export default function ListAluno() {
                             <IconSearch width={18} height={18} />
                             <input
                                 type="text"
-                                placeholder="Buscar por nome, RA ou série..."
+                                placeholder="Buscar (mínimo 3 caracteres)..."
                                 value={busca}
                                 onChange={(e) => setBusca(e.target.value)}
                                 style={{ width: "100%", fontSize: "0.9rem" }}
@@ -115,44 +186,53 @@ export default function ListAluno() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {alunosFiltrados.length > 0 ? (
-                                        alunosFiltrados.map((aluno) => (
-                                            <tr key={aluno.id}>
-                                                <td><strong>#{aluno.id}</strong></td>
-                                                <td>
-                                                    <strong style={{ color: "var(--sesi-navy)", fontSize: "0.95rem" }}>{aluno.nome}</strong>
-                                                </td>
-                                                <td>{aluno.idade} anos</td>
-                                                <td>
-                                                    <span className="badge-serie">{aluno.serie}</span>
-                                                </td>
-                                                <td>
-                                                    <span className="badge-ra">RA-{aluno.ra}</span>
-                                                </td>
-                                                <td>
-                                                    <div className="action-buttons">
-                                                        <button
-                                                            onClick={() => editarAluno(aluno)}
-                                                            className="btn-action-edit"
-                                                            title="Editar Aluno"
-                                                        >
-                                                            ✏️ Editar
-                                                        </button>
-                                                        <button
-                                                            onClick={() => excluirAluno(aluno.id)}
-                                                            className="btn-action-delete"
-                                                            title="Excluir Aluno"
-                                                        >
-                                                            🗑️ Excluir
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))
+                                    {carregando ? (
+                                        <tr>
+                                            <td colSpan="6" style={{ textAlign: "center", padding: "40px", color: "#64748b" }}>
+                                                Carregando alunos...
+                                            </td>
+                                        </tr>
+                                    ) : alunosFiltrados.length > 0 ? (
+                                        alunosFiltrados.map((aluno) => {
+                                            const alunoId = aluno.id_aluno || aluno.id;
+                                            return (
+                                                <tr key={alunoId}>
+                                                    <td><strong>#{alunoId}</strong></td>
+                                                    <td>
+                                                        <strong style={{ color: "var(--sesi-navy)", fontSize: "0.95rem" }}>{aluno.nome}</strong>
+                                                    </td>
+                                                    <td>{aluno.idade} anos</td>
+                                                    <td>
+                                                        <span className="badge-serie">{aluno.serie}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span className="badge-ra">RA-{aluno.ra}</span>
+                                                    </td>
+                                                    <td>
+                                                        <div className="action-buttons">
+                                                            <button
+                                                                onClick={() => editarAluno(aluno)}
+                                                                className="btn-action-edit"
+                                                                title="Editar Aluno"
+                                                            >
+                                                                ✏️ Editar
+                                                            </button>
+                                                            <button
+                                                                onClick={() => excluirAluno(alunoId, aluno.nome)}
+                                                                className="btn-action-delete"
+                                                                title="Excluir Aluno"
+                                                            >
+                                                                🗑️ Excluir
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
                                     ) : (
                                         <tr>
                                             <td colSpan="6" style={{ textAlign: "center", padding: "40px", color: "#64748b" }}>
-                                                Nenhum aluno encontrado para a busca "{busca}".
+                                                {buscaAtiva ? `Nenhum aluno encontrado para a busca "${busca}".` : "Nenhum aluno cadastrado ainda."}
                                             </td>
                                         </tr>
                                     )}

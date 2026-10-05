@@ -22,14 +22,43 @@ export default function CadAluno() {
   const [ra, setRa] = useState("");
   const [turno, setTurno] = useState("Manhã");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!nome || !idade || !serie || !ra) {
       alert("Por favor, preencha todos os campos obrigatórios!");
       return;
     }
-    setSubmitted(true);
+
+    try {
+      setLoading(true);
+      const resposta = await fetch("/api/alunos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome: nome,
+          idade: Number(idade),
+          serie: serie,
+          ra: ra,
+        }),
+      });
+
+      const dados = await resposta.json();
+
+      if (resposta.ok) {
+        setSubmitted(true);
+      } else {
+        alert(dados.message || dados.erro || "Erro ao cadastrar aluno");
+      }
+    } catch (error) {
+      console.error("Erro no cadastro:", error);
+      alert("Erro ao conectar com o servidor.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleReset = () => {
@@ -291,9 +320,9 @@ export default function CadAluno() {
                       <span>Cancelar</span>
                     </Link>
 
-                    <button type="submit" className="btn-sesi-red" style={{ border: "none", cursor: "pointer", fontSize: "0.95rem" }}>
+                    <button type="submit" disabled={loading} className="btn-sesi-red" style={{ border: "none", cursor: loading ? "wait" : "pointer", fontSize: "0.95rem" }}>
                       <IconUserPlus width={18} height={18} />
-                      <span>Concluir Cadastro</span>
+                      <span>{loading ? "Cadastrando..." : "Concluir Cadastro"}</span>
                       <IconChevronRight width={16} height={16} />
                     </button>
                   </div>

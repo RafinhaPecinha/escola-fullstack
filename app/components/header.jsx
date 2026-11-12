@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IconGraduation, IconUserPlus, IconList, IconFileEdit, IconAward, IconSearch, IconSparkles } from "./icons";
+import { IconGraduation, IconUserPlus, IconList, IconFileEdit, IconAward, IconSearch, IconSparkles, IconChalkboard, IconClipboardList } from "./icons";
 
 export default function Header() {
   const pathname = usePathname();
@@ -66,6 +66,18 @@ export default function Header() {
               <Link href="/listanota" className={`nav-link ${isActive("/listanota") ? "active" : ""}`}>
                 <IconAward width={18} height={18} />
                 <span>Boletins / Notas</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/cadprofessor" className={`nav-link ${isActive("/cadprofessor") ? "active" : ""}`}>
+                <IconChalkboard width={18} height={18} />
+                <span>Cadastrar Professor</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/caddisciplina" className={`nav-link ${isActive("/caddisciplina") ? "active" : ""}`}>
+                <IconClipboardList width={18} height={18} />
+                <span>Cadastrar Disciplina</span>
               </Link>
             </li>
           </ul>

@@ -18,7 +18,9 @@ import {
   IconBookOpen,
   IconZoomIn,
   IconX,
-  IconImageIcon
+  IconImageIcon,
+  IconChalkboard,
+  IconClipboardList
 } from "../components/icons";
 
 export default function Principal() {
@@ -235,6 +237,36 @@ export default function Principal() {
               <p>Consulte o histórico de rendimento, notas dos alunos e relatórios de desempenho.</p>
               <div className="card-arrow">
                 <span>Ver notas</span>
+                <IconChevronRight width={18} height={18} />
+              </div>
+            </Link>
+
+            <Link href="/cadprofessor" className="module-card card-sesi-orange">
+              <div className="card-top">
+                <div className="card-icon">
+                  <IconChalkboard width={28} height={28} />
+                </div>
+                <span className="card-badge">Docente</span>
+              </div>
+              <h3>Cadastrar Professor</h3>
+              <p>Registre professores do quadro docente, vincule disciplinas e configure os horários de aula.</p>
+              <div className="card-arrow">
+                <span>Cadastrar professor</span>
+                <IconChevronRight width={18} height={18} />
+              </div>
+            </Link>
+
+            <Link href="/caddisciplina" className="module-card card-sesi-teal">
+              <div className="card-top">
+                <div className="card-icon">
+                  <IconClipboardList width={28} height={28} />
+                </div>
+                <span className="card-badge">Currículo</span>
+              </div>
+              <h3>Cadastrar Disciplina</h3>
+              <p>Adicione disciplinas à grade curricular e defina a pontuação mínima para aprovação dos alunos.</p>
+              <div className="card-arrow">
+                <span>Cadastrar disciplina</span>
                 <IconChevronRight width={18} height={18} />
               </div>
             </Link>

@@ -20,9 +20,6 @@ export default function ListAluno() {
     // Estado para busca/filtro
     const [busca, setBusca] = useState("");
 
-    // Estado para modal de edição
-    const [alunoEditando, setAlunoEditando] = useState(null);
-
     // Função para carregar alunos da API
     const carregarAlunos = async () => {
         try {
@@ -45,40 +42,7 @@ export default function ListAluno() {
         carregarAlunos();
     }, []);
 
-    // Função para abrir o modal de edição
-    const editarAluno = (aluno) => {
-        setAlunoEditando({ ...aluno });
-    };
 
-    // Salvar alterações da edição na API
-    const salvarEdicao = async (e) => {
-        e.preventDefault();
-        try {
-            const id = alunoEditando.id_aluno || alunoEditando.id;
-            const res = await fetch("/api/alunos", {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    id_aluno: id,
-                    nome: alunoEditando.nome,
-                    idade: Number(alunoEditando.idade),
-                    serie: alunoEditando.serie,
-                    ra: alunoEditando.ra
-                })
-            });
-
-            if (res.ok) {
-                setAlunoEditando(null);
-                carregarAlunos();
-            } else {
-                const err = await res.json();
-                alert(err.message || "Erro ao editar aluno.");
-            }
-        } catch (error) {
-            console.error(error);
-            alert("Erro ao conectar com o servidor.");
-        }
-    };
 
     // Função para excluir aluno na API
     const excluirAluno = async (id, nome) => {
@@ -210,13 +174,13 @@ export default function ListAluno() {
                                                     </td>
                                                     <td>
                                                         <div className="action-buttons">
-                                                            <button
-                                                                onClick={() => editarAluno(aluno)}
+                                                            <Link
+                                                                href={`/editaluno/${alunoId}`}
                                                                 className="btn-action-edit"
                                                                 title="Editar Aluno"
                                                             >
                                                                 ✏️ Editar
-                                                            </button>
+                                                            </Link>
                                                             <button
                                                                 onClick={() => excluirAluno(alunoId, aluno.nome)}
                                                                 className="btn-action-delete"
@@ -247,101 +211,7 @@ export default function ListAluno() {
                 </div>
             </main>
 
-            {/* MODAL DE EDIÇÃO */}
-            {alunoEditando && (
-                <div className="modal-overlay" onClick={() => setAlunoEditando(null)}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <div className="form-card-header">
-                            <div className="form-header-title">
-                                <div className="form-header-icon">
-                                    <IconList width={22} height={22} />
-                                </div>
-                                <div className="form-header-text">
-                                    <h3>Editar Aluno</h3>
-                                    <p>Atualize as informações do estudante</p>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => setAlunoEditando(null)}
-                                style={{ background: "transparent", border: "none", color: "white", cursor: "pointer" }}
-                            >
-                                <IconX width={24} height={24} />
-                            </button>
-                        </div>
 
-                        <div className="form-card-body">
-                            <form onSubmit={salvarEdicao}>
-                                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                                    <div className="form-group">
-                                        <label className="form-label">Nome Completo</label>
-                                        <input
-                                            type="text"
-                                            className="form-input form-input-no-icon"
-                                            value={alunoEditando.nome}
-                                            onChange={(e) => setAlunoEditando({ ...alunoEditando, nome: e.target.value })}
-                                            required
-                                        />
-                                    </div>
-
-                                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-                                        <div className="form-group">
-                                            <label className="form-label">Idade</label>
-                                            <input
-                                                type="number"
-                                                className="form-input form-input-no-icon"
-                                                value={alunoEditando.idade}
-                                                onChange={(e) => setAlunoEditando({ ...alunoEditando, idade: e.target.value })}
-                                                required
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label className="form-label">RA</label>
-                                            <input
-                                                type="number"
-                                                className="form-input form-input-no-icon"
-                                                value={alunoEditando.ra}
-                                                onChange={(e) => setAlunoEditando({ ...alunoEditando, ra: e.target.value })}
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label className="form-label">Série / Turma</label>
-                                        <input
-                                            type="text"
-                                            className="form-input form-input-no-icon"
-                                            value={alunoEditando.serie}
-                                            onChange={(e) => setAlunoEditando({ ...alunoEditando, serie: e.target.value })}
-                                            required
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="form-actions-bar">
-                                    <button
-                                        type="button"
-                                        className="btn-sesi-outline"
-                                        onClick={() => setAlunoEditando(null)}
-                                        style={{ padding: "10px 18px" }}
-                                    >
-                                        Cancelar
-                                    </button>
-
-                                    <button
-                                        type="submit"
-                                        className="btn-sesi-red"
-                                        style={{ border: "none", cursor: "pointer", padding: "10px 20px" }}
-                                    >
-                                        Salvar Alterações
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            )}
 
             <Footer />
         </div>

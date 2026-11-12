@@ -2,7 +2,7 @@ import Database from "better-sqlite3"
 
 const db = new Database("./app/db/escola.db")
 
-db.pragma("foreing_keys = ON"); // Habilita a chave estrangeira
+db.pragma("foreign_keys = ON"); // Habilita a chave estrangeira
 
 db.exec(`
         CREATE TABLE IF NOT EXISTS alunos (
@@ -23,6 +23,22 @@ db.exec(`
             FOREIGN KEY(id_aluno) 
             REFERENCES alunos(id_aluno)
             ON DELETE CASCADE
+        );
+        CREATE TABLE IF NOT EXISTS disciplinas (
+            id_disciplina INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL UNIQUE,
+            pontuacao_minima REAL NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS professores (
+            id_professor INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            nif TEXT NOT NULL UNIQUE,
+            dias_aula TEXT NOT NULL,
+            id_disciplina INTEGER NOT NULL,
+            total_aulas_semana INTEGER NOT NULL,
+            FOREIGN KEY(id_disciplina)
+            REFERENCES disciplinas(id_disciplina)
+            ON DELETE RESTRICT
         );
     `)
 

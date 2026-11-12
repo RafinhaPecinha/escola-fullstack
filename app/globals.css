@@ -540,6 +540,8 @@ a {
 .card-sesi-navy .card-icon { background: #eff6ff; color: var(--sesi-navy); }
 .card-sesi-purple .card-icon { background: #f3e8ff; color: #7c3aed; }
 .card-sesi-emerald .card-icon { background: #d1fae5; color: #059669; }
+.card-sesi-orange .card-icon { background: #fff7ed; color: #ea580c; }
+.card-sesi-teal .card-icon { background: #f0fdfa; color: #0d9488; }
 
 .card-badge {
   font-size: 0.72rem;

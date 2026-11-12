@@ -20,7 +20,6 @@ export default function CadAluno() {
   const [idade, setIdade] = useState("");
   const [serie, setSerie] = useState("");
   const [ra, setRa] = useState("");
-  const [turno, setTurno] = useState("Manhã");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -66,7 +65,6 @@ export default function CadAluno() {
     setIdade("");
     setSerie("");
     setRa("");
-    setTurno("Manhã");
     setSubmitted(false);
   };
 
@@ -144,10 +142,6 @@ export default function CadAluno() {
                     <div>
                       <span style={{ color: "#64748b", display: "block", fontSize: "0.78rem" }}>IDADE</span>
                       <strong style={{ color: "var(--text-main)" }}>{idade} anos</strong>
-                    </div>
-                    <div>
-                      <span style={{ color: "#64748b", display: "block", fontSize: "0.78rem" }}>TURNO</span>
-                      <strong style={{ color: "var(--sesi-navy)" }}>{turno}</strong>
                     </div>
                   </div>
                 </div>
@@ -271,47 +265,7 @@ export default function CadAluno() {
                       <span className="form-help-text">Informe a série e a turma correspondente.</span>
                     </div>
 
-                    {/* TURNO SELECTION */}
-                    <div className="form-group">
-                      <label className="form-label">Turno Escolar</label>
-                      <div className="radio-pills">
-                        <label>
-                          <input
-                            type="radio"
-                            name="turno"
-                            value="Manhã"
-                            checked={turno === "Manhã"}
-                            onChange={(e) => setTurno(e.target.value)}
-                            className="radio-pill-input"
-                          />
-                          <div className="radio-pill-label">☀️ Manhã</div>
-                        </label>
 
-                        <label>
-                          <input
-                            type="radio"
-                            name="turno"
-                            value="Tarde"
-                            checked={turno === "Tarde"}
-                            onChange={(e) => setTurno(e.target.value)}
-                            className="radio-pill-input"
-                          />
-                          <div className="radio-pill-label">🌤️ Tarde</div>
-                        </label>
-
-                        <label>
-                          <input
-                            type="radio"
-                            name="turno"
-                            value="Integral"
-                            checked={turno === "Integral"}
-                            onChange={(e) => setTurno(e.target.value)}
-                            className="radio-pill-input"
-                          />
-                          <div className="radio-pill-label">⚡ Integral</div>
-                        </label>
-                      </div>
-                    </div>
                   </div>
 
                   {/* FORM ACTIONS */}
